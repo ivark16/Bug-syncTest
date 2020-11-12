@@ -25,10 +25,11 @@ const render = Component => {
 /* Render application after Office initializes */
 Office.initialize = () => {
   // @ts-ignore
-  console.log("Startup behavior: ", Office.addin.getStartupBehavior());
-  // @ts-ignore
   Office.addin.setStartupBehavior(Office.StartupBehavior.load);
+
+  // Create an event handler that detects changes in the document 
   registerAutoSyncEvent();
+  
   isOfficeInitialized = true;
   render(App);
 };
