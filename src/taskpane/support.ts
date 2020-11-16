@@ -28,6 +28,7 @@ export function registerAutoSyncEvent() {
 }
 
 async function onChange() {
+  debugWriteToFile("The onChange function was called!!", "A1");
   await Excel.run(async context => {
     enableSyncButton(true);
     await context.sync(function() {
@@ -60,4 +61,16 @@ export function enableSyncButton(enableSync: boolean = false) {
         ]
       });
     });
+}
+
+export function debugWriteToFile(text: string, location: string) {
+  Excel.run(function(context) {
+    var sheet = context.workbook.worksheets.getItem("Sheet1");
+
+    var range = sheet.getRange(location);
+    range.values = [[text]];
+    range.format.autofitColumns();
+
+    return context.sync();
+  });
 }
